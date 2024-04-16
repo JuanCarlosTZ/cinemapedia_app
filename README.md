@@ -1,3 +1,6 @@
 # cinemapedia_app
 
-A new Flutter project.
+# Dev
+
+1. Copiar el archivo .env.template y nombrarlo como .dev
+2. Cambiar las variables de entorno

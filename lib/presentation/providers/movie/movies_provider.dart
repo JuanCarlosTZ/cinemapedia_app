@@ -3,14 +3,6 @@ import 'package:cinemapedia_app/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final nowPlayingMoviesProvider =
-    StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
-  final fetchMoreMovies = ref.watch(theMoviedbRepositoryProvider).getNowPlaying;
-  return MoviesNotifier(
-    fetchMoreMovies: fetchMoreMovies,
-  );
-});
-
 typedef MovieCallback = Future<List<Movie>> Function({int page});
 
 class MoviesNotifier extends StateNotifier<List<Movie>> {
@@ -34,3 +26,35 @@ class MoviesNotifier extends StateNotifier<List<Movie>> {
     return state;
   }
 }
+
+final nowPlayingMoviesProvider =
+    StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
+  final fetchMoreMovies = ref.watch(theMoviedbRepositoryProvider).getNowPlaying;
+  return MoviesNotifier(
+    fetchMoreMovies: fetchMoreMovies,
+  );
+});
+
+final popularMoviesProvider =
+    StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
+  final fetchMoreMovies = ref.watch(theMoviedbRepositoryProvider).getPopular;
+  return MoviesNotifier(
+    fetchMoreMovies: fetchMoreMovies,
+  );
+});
+
+final upcomingMoviesProvider =
+    StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
+  final fetchMoreMovies = ref.watch(theMoviedbRepositoryProvider).getUpcoming;
+  return MoviesNotifier(
+    fetchMoreMovies: fetchMoreMovies,
+  );
+});
+
+final topRatedMoviesProvider =
+    StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
+  final fetchMoreMovies = ref.watch(theMoviedbRepositoryProvider).getTopRated;
+  return MoviesNotifier(
+    fetchMoreMovies: fetchMoreMovies,
+  );
+});

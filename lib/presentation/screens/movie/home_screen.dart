@@ -35,24 +35,66 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     if (ref.read(nowPlayingMoviesProvider).isEmpty) {
       ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
     }
+    if (ref.read(popularMoviesProvider).isEmpty) {
+      ref.read(popularMoviesProvider.notifier).loadNextPage();
+    }
+    if (ref.read(upcomingMoviesProvider).isEmpty) {
+      ref.read(upcomingMoviesProvider.notifier).loadNextPage();
+    }
+    if (ref.read(topRatedMoviesProvider).isEmpty) {
+      ref.read(topRatedMoviesProvider.notifier).loadNextPage();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final movies = ref.watch(swipeShowMoviesProvider);
+    final mainShowMovies = ref.watch(swipeShowMoviesProvider);
+    final topTenMovies = ref.watch(customPopularTopTenProvider);
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
-    return Column(
-      children: [
-        const CustomAppbar(),
-        SlideShowMovie(movies),
-        HorizontalListviewMovie(
-          title: "En cines",
-          header: 'Lunes 20',
-          movies: nowPlayingMovies,
-          loadNextPage: () {
-            ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
-          },
-        )
+    final topRatedMovies = ref.watch(topRatedMoviesProvider);
+    final upcomingMovies = ref.watch(upcomingMoviesProvider);
+
+    final List<Widget> _sliverContent = [
+      SlideShowMovie(mainShowMovies),
+      const SizedBox(height: 20),
+      HorizontalListviewMovie(
+        title: "En cines",
+        header: 'Lunes 20',
+        movies: nowPlayingMovies,
+        loadNextPage: () {
+          ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+        },
+      ),
+      HorizontalListviewMovie(
+        title: "Mejor votadas",
+        movies: topRatedMovies,
+        loadNextPage: () {
+          ref.read(topRatedMoviesProvider.notifier).loadNextPage();
+        },
+      ),
+      HorizontalListviewMovie(
+        title: "Populares",
+        header: 'Top 10',
+        movies: topTenMovies,
+      ),
+      HorizontalListviewMovie(
+        title: "Muy pronto",
+        header: 'Solo en cines',
+        movies: upcomingMovies,
+        loadNextPage: () {
+          ref.read(upcomingMoviesProvider.notifier).loadNextPage();
+        },
+      )
+    ];
+
+    return CustomScrollView(
+      slivers: [
+        const SliverAppBar(floating: true, flexibleSpace: CustomAppbar()),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+              childCount: _sliverContent.length,
+              (context, index) => _sliverContent[index]),
+        ),
       ],
     );
   }

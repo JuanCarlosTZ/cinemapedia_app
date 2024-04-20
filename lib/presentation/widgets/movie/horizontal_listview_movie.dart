@@ -26,6 +26,7 @@ class _HorizontalListviewMovieState extends State<HorizontalListviewMovie> {
 
   @override
   void initState() {
+    super.initState();
     controller = ScrollController();
     controller.addListener(() {
       if (widget.loadNextPage == null) return;
@@ -34,7 +35,6 @@ class _HorizontalListviewMovieState extends State<HorizontalListviewMovie> {
         widget.loadNextPage!();
       }
     });
-    super.initState();
   }
 
   @override
@@ -46,7 +46,7 @@ class _HorizontalListviewMovieState extends State<HorizontalListviewMovie> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Column(
         children: [
           _HeaderBar(title: widget.title, header: widget.header),
@@ -78,23 +78,9 @@ class _Slide extends StatelessWidget {
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
     final ratingColor = Colors.orange.shade900;
-    final customRating = Row(
-      children: [
-        Icon(Icons.star_half_rounded, color: ratingColor),
-        Text(
-          Helpers.humanNumber(movie.voteAverage),
-          style: textStyle.bodyLarge?.copyWith(color: ratingColor),
-        ),
-        const SizedBox(width: 20),
-        Text(
-          Helpers.humanNumber(movie.voteCount.toDouble()),
-          style: textStyle.bodyMedium,
-        ),
-      ],
-    );
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -106,7 +92,20 @@ class _Slide extends StatelessWidget {
           const SizedBox(height: 10),
           Text(movie.title,
               style: textStyle.titleSmall, softWrap: true, maxLines: 2),
-          customRating,
+          Row(
+            children: [
+              Icon(Icons.star_half_rounded, color: ratingColor),
+              Text(
+                Helpers.humanNumber(movie.voteAverage),
+                style: textStyle.bodyLarge?.copyWith(color: ratingColor),
+              ),
+              const SizedBox(width: 20),
+              Text(
+                Helpers.humanNumber(movie.voteCount.toDouble()),
+                style: textStyle.bodyMedium,
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -124,18 +123,9 @@ class _HeaderBar extends StatelessWidget {
 
     final textStyle = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
-    final decoratedBox = DecoratedBox(
-      decoration: BoxDecoration(
-        color: colors.secondaryContainer,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 25),
-        child: Text(
-          '$header',
-          style: textStyle.titleSmall,
-        ),
-      ),
+    final decoration = BoxDecoration(
+      color: colors.secondaryContainer,
+      borderRadius: BorderRadius.circular(20),
     );
 
     return Padding(
@@ -144,7 +134,19 @@ class _HeaderBar extends StatelessWidget {
         children: [
           Text('$title', style: textStyle.titleLarge),
           const Spacer(),
-          decoratedBox,
+          header == null
+              ? const SizedBox()
+              : DecoratedBox(
+                  decoration: decoration,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 6, horizontal: 25),
+                    child: Text(
+                      '$header',
+                      style: textStyle.titleSmall,
+                    ),
+                  ),
+                ),
         ],
       ),
     );

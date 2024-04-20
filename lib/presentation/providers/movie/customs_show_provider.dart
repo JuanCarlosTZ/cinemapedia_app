@@ -5,5 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final swipeShowMoviesProvider = Provider<List<Movie>>((ref) {
   final movies = ref.watch(nowPlayingMoviesProvider);
 
-  return movies.length > 6 ? movies.sublist(0, 6) : movies;
+  return movies.length >= 6 ? movies.sublist(0, 6) : movies;
+});
+
+final customPopularTopTenProvider = Provider<List<Movie>>((ref) {
+  final movies = ref.watch(popularMoviesProvider);
+
+  return movies.length >= 10 ? movies.sublist(0, 10) : movies;
 });

@@ -11,7 +11,7 @@ class SlideShowMovie extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final swiperPagination = SwiperPagination(
-      margin: const EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(vertical: 0),
       alignment: Alignment.bottomCenter,
       builder: DotSwiperPaginationBuilder(
           activeColor: colors.primary, color: colors.outlineVariant),

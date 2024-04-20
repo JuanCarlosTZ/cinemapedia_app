@@ -15,18 +15,37 @@ class TheMoviedbDatasource extends MoviesDatasource {
   ));
 
   @override
-  Future<List<Movie>> getNowPlaying({int page = 1}) async {
+  Future<List<Movie>> get(
+    String url, {
+    Map<String, dynamic>? queryParameters,
+  }) async {
     final Response response =
-        await dio.get('/movie/now_playing', queryParameters: {'page': page});
+        await dio.get(url, queryParameters: queryParameters);
 
-    final moviesPaginatedModel =
-        TheMoviedbPagenatedModel.fromJson(response.data);
-
-    final List<Movie> movies = moviesPaginatedModel.theMoviedbModelList
-        .map((theMoviedbModel) =>
-            MovieMapper.theMoviedbModelToEntity(theMoviedbModel))
-        .toList();
+    final List<Movie> movies = MovieMapper.theMoviedbPaginatedToListEntity(
+      TheMoviedbPagenatedModel.fromJson(response.data),
+    );
 
     return movies;
+  }
+
+  @override
+  Future<List<Movie>> getNowPlaying({int page = 1}) async {
+    return await get('/movie/now_playing', queryParameters: {'page': page});
+  }
+
+  @override
+  Future<List<Movie>> getPopular({int page = 1}) async {
+    return await get('/movie/popular', queryParameters: {'page': page});
+  }
+
+  @override
+  Future<List<Movie>> getTopRated({int page = 1}) async {
+    return await get('/movie/top_rated', queryParameters: {'page': page});
+  }
+
+  @override
+  Future<List<Movie>> getUpcoming({int page = 1}) async {
+    return await get('/movie/upcoming', queryParameters: {'page': page});
   }
 }

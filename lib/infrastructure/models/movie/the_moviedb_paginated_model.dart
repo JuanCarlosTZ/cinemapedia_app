@@ -29,7 +29,7 @@ class TheMoviedbPagenatedModel {
 
   factory TheMoviedbPagenatedModel.fromJson(Map<String, dynamic> json) =>
       TheMoviedbPagenatedModel(
-        dates: Dates.fromJson(json["dates"]),
+        dates: json["dates"] == null ? null : Dates.fromJson(json["dates"]),
         page: json["page"],
         theMoviedbModelList: List<TheMoviedbModel>.from(
             json["results"].map((x) => TheMoviedbModel.fromJson(x))),

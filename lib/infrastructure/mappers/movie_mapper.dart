@@ -1,5 +1,6 @@
 import 'package:cinemapedia_app/domain/entities/movie.dart';
 import 'package:cinemapedia_app/infrastructure/models/movie/the_moviedb_model.dart';
+import 'package:cinemapedia_app/infrastructure/models/movie/the_moviedb_paginated_model.dart';
 
 class MovieMapper {
   static Movie theMoviedbModelToEntity(TheMoviedbModel theMoviedbModel) =>
@@ -14,7 +15,7 @@ class MovieMapper {
         id: theMoviedbModel.id,
         originalLanguage: theMoviedbModel.originalLanguage,
         originalTitle: theMoviedbModel.originalTitle,
-        overview: theMoviedbModel.overview,
+        overview: '', // theMoviedbModel.overview,
         popularity: theMoviedbModel.popularity,
         posterPath: (theMoviedbModel.posterPath != '')
             ? 'https://image.tmdb.org/t/p/w500${theMoviedbModel.posterPath}'
@@ -25,4 +26,12 @@ class MovieMapper {
         voteAverage: theMoviedbModel.voteAverage,
         voteCount: theMoviedbModel.voteCount,
       );
+
+  static List<Movie> theMoviedbPaginatedToListEntity(
+      TheMoviedbPagenatedModel moviePaginatedModel) {
+    return moviePaginatedModel.theMoviedbModelList
+        .map((theMoviedbModel) =>
+            MovieMapper.theMoviedbModelToEntity(theMoviedbModel))
+        .toList();
+  }
 }

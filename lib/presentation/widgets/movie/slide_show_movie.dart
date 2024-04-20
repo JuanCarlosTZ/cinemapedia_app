@@ -1,5 +1,6 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:cinemapedia_app/domain/entities/movie.dart';
+import 'package:cinemapedia_app/presentation/widgets/movie/custom_image_view.dart';
 import 'package:flutter/material.dart';
 
 class SlideShowMovie extends StatelessWidget {
@@ -27,37 +28,12 @@ class SlideShowMovie extends StatelessWidget {
         pagination: swiperPagination,
         itemCount: movies.length,
         itemBuilder: (context, index) {
-          return _Slide(movies[index]);
+          return CustomImageView(
+            topPadding: 5,
+            bottomPadding: 30,
+            movies[index].backdropPath,
+          );
         },
-      ),
-    );
-  }
-}
-
-class _Slide extends StatelessWidget {
-  const _Slide(this.movie);
-
-  final Movie movie;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-    final decoration =
-        BoxDecoration(borderRadius: BorderRadius.circular(20), boxShadow: [
-      BoxShadow(
-          color: colors.secondary.withOpacity(0.8),
-          blurRadius: 10,
-          offset: const Offset(0, 10)),
-    ]);
-
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 30, top: 10),
-      child: DecoratedBox(
-        decoration: decoration,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Image.network(movie.backdropPath, fit: BoxFit.cover),
-        ),
       ),
     );
   }

@@ -16,7 +16,8 @@ class TheMoviedbDatasource extends MoviesDatasource {
 
   @override
   Future<List<Movie>> getNowPlaying({int page = 1}) async {
-    final Response response = await dio.get('/movie/now_playing');
+    final Response response =
+        await dio.get('/movie/now_playing', queryParameters: {'page': page});
 
     final moviesPaginatedModel =
         TheMoviedbPagenatedModel.fromJson(response.data);

@@ -1,9 +1,11 @@
-import 'package:cinemapedia_app/presentation/providers/movie/customs_show_provider.dart';
+import 'package:cinemapedia_app/presentation/widgets/movie/horizontal_listview_movie.dart';
+import 'package:flutter/material.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:cinemapedia_app/presentation/providers/providers.dart';
 import 'package:cinemapedia_app/presentation/widgets/movie/slide_show_movie.dart';
 import 'package:cinemapedia_app/presentation/widgets/shared/custom_appbar.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeScreen extends StatelessWidget {
   static String name = 'home_screen';
@@ -35,11 +37,20 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    final swiperMoviesProvider = ref.watch(swipeShowMoviesProvider);
+    final movies = ref.watch(swipeShowMoviesProvider);
+    final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
     return Column(
       children: [
         const CustomAppbar(),
-        SlideShowMovie(swiperMoviesProvider),
+        SlideShowMovie(movies),
+        HorizontalListviewMovie(
+          title: "En cines",
+          header: 'Lunes 20',
+          movies: nowPlayingMovies,
+          loadNextPage: () {
+            ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+          },
+        )
       ],
     );
   }

@@ -1,4 +1,5 @@
 import 'package:cinemapedia_app/presentation/widgets/movie/horizontal_listview_movie.dart';
+import 'package:cinemapedia_app/presentation/widgets/shared/custom_navigaton_bottom.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,6 +16,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: _HomeView(),
+      bottomNavigationBar: CustomNavigationBottom(),
     );
   }
 }

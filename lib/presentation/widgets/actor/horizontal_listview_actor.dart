@@ -1,11 +1,8 @@
 import 'package:cinemapedia_app/config/constants/assets_images_app.dart';
-import 'package:cinemapedia_app/config/constants/route_parametes_app.dart';
 import 'package:cinemapedia_app/config/helper/helpers.dart';
 import 'package:cinemapedia_app/domain/entities/movie.dart';
-import 'package:cinemapedia_app/presentation/screens.dart';
 import 'package:cinemapedia_app/presentation/widgets/shared/custom_item_slide.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class HorizontalListviewMovie extends StatefulWidget {
   final String? title;
@@ -71,20 +68,10 @@ class _HorizontalListviewMovieState extends State<HorizontalListviewMovie> {
 
                 return Column(
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        context.goNamed(
-                          MovieInfoScreen.name,
-                          pathParameters:
-                              RouteParametersApp.getMovieInfoParameters(
-                                  id: movie.id),
-                        );
-                      },
-                      child: CustomItemSlide(
-                        caption: movie.title,
-                        urlImage: movie.posterPath,
-                        placeholderAssetImage: AssetsImagesApp.avatarPerson01,
-                      ),
+                    CustomItemSlide(
+                      caption: movie.title,
+                      urlImage: movie.posterPath,
+                      placeholderAssetImage: AssetsImagesApp.avatarPerson01,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),

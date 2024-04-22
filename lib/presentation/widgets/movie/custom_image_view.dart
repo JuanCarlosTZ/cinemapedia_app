@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 
 class CustomImageView extends StatelessWidget {
-  const CustomImageView(this.url,
-      {super.key, this.topPadding = 0, this.bottomPadding = 0});
-
   final String url;
   final double topPadding;
   final double bottomPadding;
+  final bool isAssetImage;
+  const CustomImageView(
+    this.url, {
+    super.key,
+    this.topPadding = 0,
+    this.bottomPadding = 0,
+    this.isAssetImage = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +30,12 @@ class CustomImageView extends StatelessWidget {
         decoration: decoration,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          child: Image.network(url, fit: BoxFit.cover),
+          child: isAssetImage
+              ? Image.asset(
+                  url,
+                  fit: BoxFit.cover,
+                )
+              : Image.network(url, fit: BoxFit.cover),
         ),
       ),
     );

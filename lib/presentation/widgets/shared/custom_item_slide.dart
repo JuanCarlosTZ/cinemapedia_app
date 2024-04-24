@@ -1,5 +1,4 @@
-import 'package:cinemapedia_app/config/helper/helpers.dart';
-import 'package:cinemapedia_app/domain/entities/movie.dart';
+import 'package:cinemapedia_app/config/constants/assets_images_app.dart';
 import 'package:cinemapedia_app/presentation/widgets/movie/custom_image_view.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +25,12 @@ class CustomItemSlide extends StatelessWidget {
           SizedBox(
             height: 210,
             width: 150,
-            child: CustomImageView(urlImage),
+            child: urlImage.isNotEmpty
+                ? CustomImageView(urlImage)
+                : CustomImageView(
+                    AssetsImagesApp.avatarPerson01,
+                    isAssetImage: true,
+                  ),
           ),
           const SizedBox(height: 10),
           Text(caption,

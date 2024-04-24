@@ -54,7 +54,7 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     final topRatedMovies = ref.watch(topRatedMoviesProvider);
     final upcomingMovies = ref.watch(upcomingMoviesProvider);
 
-    final List<Widget> _sliverContent = [
+    final List<Widget> sliverContent = [
       SlideShowMovie(mainShowMovies),
       const SizedBox(height: 20),
       HorizontalListviewMovie(
@@ -92,8 +92,8 @@ class _HomeViewState extends ConsumerState<_HomeView> {
         const SliverAppBar(floating: true, flexibleSpace: CustomAppbar()),
         SliverList(
           delegate: SliverChildBuilderDelegate(
-              childCount: _sliverContent.length,
-              (context, index) => _sliverContent[index]),
+              childCount: sliverContent.length,
+              (context, index) => sliverContent[index]),
         ),
       ],
     );

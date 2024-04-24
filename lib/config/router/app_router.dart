@@ -11,7 +11,7 @@ class AppRouter {
         builder: (context, state) => const HomeScreen(),
         routes: [
           GoRoute(
-            path: 'movie/:${MovieInfoScreen.idPath}',
+            path: 'movie/:id',
             name: MovieInfoScreen.name,
             builder: (context, state) {
               final movieId = state.pathParameters['id'] ?? 'no-id';

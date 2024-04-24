@@ -1,28 +1,27 @@
 import 'package:cinemapedia_app/config/constants/assets_images_app.dart';
-import 'package:cinemapedia_app/config/helper/helpers.dart';
-import 'package:cinemapedia_app/domain/entities/movie.dart';
+import 'package:cinemapedia_app/domain/entities/actor.dart';
 import 'package:cinemapedia_app/presentation/widgets/shared/custom_item_slide.dart';
 import 'package:flutter/material.dart';
 
-class HorizontalListviewMovie extends StatefulWidget {
+class HorizontalListviewActor extends StatefulWidget {
   final String? title;
   final String? header;
-  final List<Movie> movies;
+  final List<Actor> actors;
   final VoidCallback? loadNextPage;
-  const HorizontalListviewMovie({
+  const HorizontalListviewActor({
     super.key,
     this.title,
     this.header,
-    required this.movies,
+    required this.actors,
     this.loadNextPage,
   });
 
   @override
-  State<HorizontalListviewMovie> createState() =>
-      _HorizontalListviewMovieState();
+  State<HorizontalListviewActor> createState() =>
+      _HorizontalListviewActorState();
 }
 
-class _HorizontalListviewMovieState extends State<HorizontalListviewMovie> {
+class _HorizontalListviewActorState extends State<HorizontalListviewActor> {
   late final ScrollController controller;
 
   @override
@@ -46,9 +45,6 @@ class _HorizontalListviewMovieState extends State<HorizontalListviewMovie> {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = Theme.of(context).textTheme;
-    final ratingColor = Colors.orange.shade900;
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Column(
@@ -62,34 +58,16 @@ class _HorizontalListviewMovieState extends State<HorizontalListviewMovie> {
               itemExtent: 150,
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
               scrollDirection: Axis.horizontal,
-              itemCount: widget.movies.length,
+              itemCount: widget.actors.length,
               itemBuilder: (context, index) {
-                final movie = widget.movies[index];
+                final actor = widget.actors[index];
 
                 return Column(
                   children: [
                     CustomItemSlide(
-                      caption: movie.title,
-                      urlImage: movie.posterPath,
+                      caption: '${actor.name} - ${actor.character}',
+                      urlImage: actor.profilePath,
                       placeholderAssetImage: AssetsImagesApp.avatarPerson01,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Row(
-                        children: [
-                          Icon(Icons.star_half_rounded, color: ratingColor),
-                          Text(
-                            Helpers.humanNumber(movie.voteAverage),
-                            style: textStyle.bodyLarge
-                                ?.copyWith(color: ratingColor),
-                          ),
-                          const SizedBox(width: 20),
-                          Text(
-                            Helpers.humanNumber(movie.voteCount.toDouble()),
-                            style: textStyle.bodyMedium,
-                          ),
-                        ],
-                      ),
                     ),
                   ],
                 );
@@ -105,7 +83,10 @@ class _HorizontalListviewMovieState extends State<HorizontalListviewMovie> {
 class _HeaderBar extends StatelessWidget {
   final String? title;
   final String? header;
-  const _HeaderBar({this.title, this.header});
+  const _HeaderBar({
+    this.header,
+    this.title,
+  });
 
   @override
   Widget build(BuildContext context) {

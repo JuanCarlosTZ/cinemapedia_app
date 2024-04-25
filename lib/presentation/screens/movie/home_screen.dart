@@ -98,10 +98,14 @@ class _HomeViewState extends ConsumerState<_HomeView> {
         SliverAppBar(
             floating: true,
             flexibleSpace: CustomAppbar(onPressed: () {
+              final query = searchMovies.entries.last.key;
+              final movies = searchMovies.entries.last.value;
+
               showSearch(
-                  query: searchMovies.entries.last.key,
+                  query: query,
                   context: context,
                   delegate: SearchMovieDelegate(
+                    initialData: movies,
                     onSearch: (String query) {
                       return ref
                           .read(searchMoviesProvider.notifier)

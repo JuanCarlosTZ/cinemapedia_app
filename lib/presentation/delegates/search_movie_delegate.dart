@@ -14,8 +14,10 @@ class SearchMovieDelegate extends SearchDelegate<int?> {
       StreamController.broadcast();
 
   final StreamController<bool> loadingStream = StreamController();
+  List<Movie> initialData;
 
   SearchMovieDelegate({
+    required this.initialData,
     required this.onSearch,
   }) : super(
           searchFieldLabel: 'Buscar peliculas...',
@@ -29,14 +31,20 @@ class SearchMovieDelegate extends SearchDelegate<int?> {
 
     _debounceTimer = Timer(const Duration(seconds: 1), () async {
       final movies = await onSearch(query);
+
+      initialData = movies;
       movieStream.add(movies);
       loadingStream.add(false);
     });
   }
 
+  void closeStream() {
+    movieStream.close();
+  }
+
   @override
   void dispose() {
-    movieStream.close();
+    closeStream();
     super.dispose();
   }
 
@@ -84,27 +92,46 @@ class SearchMovieDelegate extends SearchDelegate<int?> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return _BouncedMovies(movieStream: movieStream);
+    return _BouncedMovies(
+      initialData: initialData,
+      movieStream: movieStream,
+      onPressed: (int id) {
+        closeStream();
+        close(context, id);
+      },
+    );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     _onQueryChanged(query);
 
-    return _BouncedMovies(movieStream: movieStream);
+    return _BouncedMovies(
+      initialData: initialData,
+      movieStream: movieStream,
+      onPressed: (int id) {
+        closeStream();
+        close(context, id);
+      },
+    );
   }
 }
 
 class _BouncedMovies extends StatelessWidget {
+  final StreamController<List<Movie>> movieStream;
+  final List<Movie> initialData;
+  final Function(int id) onPressed;
+
   const _BouncedMovies({
     required this.movieStream,
+    required this.initialData,
+    required this.onPressed,
   });
-
-  final StreamController<List<Movie>> movieStream;
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
+    return StreamBuilder<List<Movie>>(
+      initialData: initialData,
       stream: movieStream.stream,
       builder: (context, snapshot) {
         final movies = snapshot.data;
@@ -119,10 +146,11 @@ class _BouncedMovies extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(
-                    onTap: () {
-                      movieStream.close();
-                      context.pop(movies[index].id);
-                    },
+                    onTap: () => onPressed(movies[index].id),
+                    // () {
+                    //   movieStream.close();
+                    //   context.pop(movies[index].id);
+                    // },
                     child: MovieDescriptionView(
                       movie: movies[index],
                       isCompact: true,

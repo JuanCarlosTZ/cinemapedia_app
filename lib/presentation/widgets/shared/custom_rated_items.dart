@@ -14,23 +14,21 @@ class CustomRatedItems extends StatelessWidget {
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
     final ratingColor = Colors.orange.shade900;
-    return Container(
-      child: Wrap(
-        alignment: WrapAlignment.start,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: [
-          Icon(Icons.star_half_rounded, color: ratingColor),
-          Text(
-            Helpers.humanNumber(voteAverage),
-            style: textStyle.bodyLarge?.copyWith(color: ratingColor),
-          ),
-          const SizedBox(width: 10),
-          Text(
-            '${Helpers.humanNumber(voteCount.toDouble())} votos',
-            style: textStyle.bodyMedium,
-          ),
-        ],
-      ),
+    return Wrap(
+      alignment: WrapAlignment.start,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        Icon(Icons.star_half_rounded, color: ratingColor),
+        Text(
+          Helpers.humanNumber(voteAverage),
+          style: textStyle.bodyLarge?.copyWith(color: ratingColor),
+        ),
+        const SizedBox(width: 10),
+        Text(
+          '${Helpers.humanNumber(voteCount.toDouble())} votos',
+          style: textStyle.bodyMedium,
+        ),
+      ],
     );
   }
 }

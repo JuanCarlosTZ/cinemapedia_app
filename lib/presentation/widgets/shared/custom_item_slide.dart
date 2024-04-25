@@ -30,7 +30,10 @@ class CustomItemSlide extends StatelessWidget {
               )),
           const SizedBox(height: 10),
           Text(caption,
-              style: textStyle.titleSmall, softWrap: true, maxLines: 2),
+              style: textStyle.titleSmall
+                  ?.copyWith(overflow: TextOverflow.ellipsis),
+              softWrap: true,
+              maxLines: 2),
         ],
       ),
     );

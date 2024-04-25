@@ -19,7 +19,7 @@ class MovieDescriptionView extends StatelessWidget {
     final style = Theme.of(context).textTheme;
     final double maxWidth = isCompact ? 500.0 : 1000.0;
     final double width = (sizes.width > maxWidth) ? maxWidth : sizes.width;
-    final double shortWidth = 0.3 * width;
+    final double shortWidth = 0.25 * width;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +45,7 @@ class MovieDescriptionView extends StatelessWidget {
               //* Titulo
               Text(
                 movie.title,
-                style: style.titleLarge,
+                style: isCompact ? style.titleMedium : style.titleLarge,
                 softWrap: true,
                 maxLines: isCompact ? 3 : null,
               ),
@@ -58,7 +58,7 @@ class MovieDescriptionView extends StatelessWidget {
                       movie.overview,
                       softWrap: true,
                       maxLines: 3,
-                      style: const TextStyle(
+                      style: style.bodyMedium?.copyWith(
                         overflow: TextOverflow.ellipsis,
                       ),
                     )

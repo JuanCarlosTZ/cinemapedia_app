@@ -1,8 +1,13 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import 'package:cinemapedia_app/config/constants/route_parametes_app.dart';
+import 'package:cinemapedia_app/presentation/delegates/search_movie_delegate.dart';
+import 'package:cinemapedia_app/presentation/providers/movie/movie_search_provider.dart';
+import 'package:cinemapedia_app/presentation/screens/movie/movie_info_screen.dart';
 import 'package:cinemapedia_app/presentation/widgets/movie/horizontal_listview_movie.dart';
 import 'package:cinemapedia_app/presentation/widgets/shared/custom_navigaton_bottom.dart';
-import 'package:flutter/material.dart';
-
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:cinemapedia_app/presentation/providers/providers.dart';
 import 'package:cinemapedia_app/presentation/widgets/movie/slide_show_movie.dart';
@@ -53,6 +58,7 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
     final topRatedMovies = ref.watch(topRatedMoviesProvider);
     final upcomingMovies = ref.watch(upcomingMoviesProvider);
+    final searchMovies = ref.watch(searchMoviesProvider);
 
     final List<Widget> sliverContent = [
       SlideShowMovie(mainShowMovies),
@@ -89,7 +95,28 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
     return CustomScrollView(
       slivers: [
-        const SliverAppBar(floating: true, flexibleSpace: CustomAppbar()),
+        SliverAppBar(
+            floating: true,
+            flexibleSpace: CustomAppbar(onPressed: () {
+              showSearch(
+                  query: searchMovies.entries.last.key,
+                  context: context,
+                  delegate: SearchMovieDelegate(
+                    onSearch: (String query) {
+                      return ref
+                          .read(searchMoviesProvider.notifier)
+                          .loadSearchMovies(query);
+                    },
+                  )).then((value) {
+                if (value != null) {
+                  context.goNamed(
+                    MovieInfoScreen.name,
+                    pathParameters:
+                        RouteParametersApp.getMovieInfoParameters(id: value),
+                  );
+                }
+              });
+            })),
         SliverList(
           delegate: SliverChildBuilderDelegate(
               childCount: sliverContent.length,

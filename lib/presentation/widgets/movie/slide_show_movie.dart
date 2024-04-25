@@ -17,13 +17,15 @@ class SlideShowMovie extends StatelessWidget {
           activeColor: colors.primary, color: colors.outlineVariant),
     );
 
+    final sizes = MediaQuery.of(context).size;
+
     return SizedBox(
       width: double.infinity,
       height: 210,
       child: Swiper(
         loop: false,
-        viewportFraction: 0.8,
-        scale: 0.9,
+        viewportFraction: sizes.width > 1000 ? 0.4 : 0.8,
+        scale: sizes.width > 1000 ? 0.6 : 0.9,
         autoplay: true,
         pagination: swiperPagination,
         itemCount: movies.length,

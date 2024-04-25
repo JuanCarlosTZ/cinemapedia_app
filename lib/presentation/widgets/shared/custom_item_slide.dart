@@ -1,16 +1,15 @@
-import 'package:cinemapedia_app/config/constants/assets_images_app.dart';
 import 'package:cinemapedia_app/presentation/widgets/movie/custom_image_view.dart';
 import 'package:flutter/material.dart';
 
 class CustomItemSlide extends StatelessWidget {
   final String urlImage;
   final String caption;
-  final String? placeholderAssetImage;
+  final bool isAssetImage;
   const CustomItemSlide({
     super.key,
     required this.urlImage,
     required this.caption,
-    this.placeholderAssetImage,
+    this.isAssetImage = false,
   });
 
   @override
@@ -23,15 +22,12 @@ class CustomItemSlide extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 210,
-            width: 150,
-            child: urlImage.isNotEmpty
-                ? CustomImageView(urlImage)
-                : CustomImageView(
-                    AssetsImagesApp.avatarPerson01,
-                    isAssetImage: true,
-                  ),
-          ),
+              height: 210,
+              width: 150,
+              child: CustomImageView(
+                urlImage,
+                isAssetImage: isAssetImage,
+              )),
           const SizedBox(height: 10),
           Text(caption,
               style: textStyle.titleSmall, softWrap: true, maxLines: 2),

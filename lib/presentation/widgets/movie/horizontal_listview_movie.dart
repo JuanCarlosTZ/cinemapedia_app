@@ -1,9 +1,9 @@
 import 'package:cinemapedia_app/config/constants/assets_images_app.dart';
 import 'package:cinemapedia_app/config/constants/route_parametes_app.dart';
-import 'package:cinemapedia_app/config/helper/helpers.dart';
 import 'package:cinemapedia_app/domain/entities/movie.dart';
 import 'package:cinemapedia_app/presentation/screens.dart';
 import 'package:cinemapedia_app/presentation/widgets/shared/custom_item_slide.dart';
+import 'package:cinemapedia_app/presentation/widgets/shared/custom_rated_items.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -49,9 +49,6 @@ class _HorizontalListviewMovieState extends State<HorizontalListviewMovie> {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = Theme.of(context).textTheme;
-    final ratingColor = Colors.orange.shade900;
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Column(
@@ -82,26 +79,17 @@ class _HorizontalListviewMovieState extends State<HorizontalListviewMovie> {
                       },
                       child: CustomItemSlide(
                         caption: movie.title,
-                        urlImage: movie.posterPath,
-                        placeholderAssetImage: AssetsImagesApp.avatarPerson01,
+                        urlImage: movie.posterPath == null
+                            ? AssetsImagesApp.avatarPerson01
+                            : movie.posterPath!,
+                        isAssetImage: movie.posterPath == null,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Row(
-                        children: [
-                          Icon(Icons.star_half_rounded, color: ratingColor),
-                          Text(
-                            Helpers.humanNumber(movie.voteAverage),
-                            style: textStyle.bodyLarge
-                                ?.copyWith(color: ratingColor),
-                          ),
-                          const SizedBox(width: 20),
-                          Text(
-                            Helpers.humanNumber(movie.voteCount.toDouble()),
-                            style: textStyle.bodyMedium,
-                          ),
-                        ],
+                      child: CustomRatedItems(
+                        voteAverage: movie.voteAverage,
+                        voteCount: movie.voteCount,
                       ),
                     ),
                   ],

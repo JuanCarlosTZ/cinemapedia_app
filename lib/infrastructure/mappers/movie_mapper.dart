@@ -40,11 +40,11 @@ class MovieMapper {
         id: theMoviedbModel.id,
         originalLanguage: theMoviedbModel.originalLanguage,
         originalTitle: theMoviedbModel.originalTitle,
-        overview: '', // theMoviedbModel.overview,
+        overview: theMoviedbModel.overview,
         popularity: theMoviedbModel.popularity,
-        posterPath: (theMoviedbModel.posterPath != '')
+        posterPath: (theMoviedbModel.posterPath?.isEmpty != true)
             ? 'https://image.tmdb.org/t/p/w500${theMoviedbModel.posterPath}'
-            : '',
+            : null,
         releaseDate: theMoviedbModel.releaseDate,
         title: theMoviedbModel.title,
         video: theMoviedbModel.video,

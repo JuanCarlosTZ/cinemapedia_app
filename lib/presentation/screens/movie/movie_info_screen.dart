@@ -1,7 +1,9 @@
+import 'package:animate_do/animate_do.dart';
+import 'package:cinemapedia_app/config/constants/assets_images_app.dart';
 import 'package:cinemapedia_app/domain/entities/movie.dart';
 import 'package:cinemapedia_app/presentation/widgets/actor/horizontal_listview_actor.dart';
-import 'package:cinemapedia_app/presentation/widgets/movie/custom_image_view.dart';
-import 'package:cinemapedia_app/presentation/widgets/shared/custon_back_action.dart';
+import 'package:cinemapedia_app/presentation/widgets/movie/movie_description_view.dart';
+import 'package:cinemapedia_app/presentation/widgets/shared/custom_back_action.dart';
 
 import 'package:flutter/material.dart';
 
@@ -41,19 +43,21 @@ class MovieInfoScreenState extends ConsumerState<MovieInfoScreen> {
     if (movie == null) return _Loading();
 
     return Scaffold(
-      body: CustomScrollView(
-        physics: const ClampingScrollPhysics(),
-        slivers: [
-          SliverAppBar(
-              leading: CustonBackAction(onPressed: context.pop),
-              expandedHeight: 0.7 * size.height,
-              flexibleSpace: _CustomSliverAppbar(url: movie.posterPath)),
-          SliverList(
-              delegate:
-                  SliverChildBuilderDelegate(childCount: 1, (context, index) {
-            return _CustomSliverItem(movie);
-          })),
-        ],
+      body: FadeIn(
+        child: CustomScrollView(
+          physics: const ClampingScrollPhysics(),
+          slivers: [
+            SliverAppBar(
+                leading: CustomBackAction(onPressed: context.pop),
+                expandedHeight: 0.7 * size.height,
+                flexibleSpace: _CustomSliverAppbar(url: movie.posterPath)),
+            SliverList(
+                delegate:
+                    SliverChildBuilderDelegate(childCount: 1, (context, index) {
+              return SafeArea(top: false, child: _CustomSliverItem(movie));
+            })),
+          ],
+        ),
       ),
     );
   }
@@ -73,13 +77,21 @@ class _Loading extends StatelessWidget {
 }
 
 class _CustomSliverAppbar extends StatelessWidget {
-  final String url;
-  const _CustomSliverAppbar({required this.url});
+  final String? url;
+  const _CustomSliverAppbar({this.url});
 
   @override
   Widget build(BuildContext context) {
+    if (url == null) {
+      return Image.asset(
+        AssetsImagesApp.noPoster01,
+        fit: BoxFit.cover,
+        height: double.infinity,
+      );
+    }
+
     return Image.network(
-      url,
+      url!,
       fit: BoxFit.cover,
       height: double.infinity,
     );
@@ -99,7 +111,7 @@ class _CustomSliverItem extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //* Descripcion
-          _CardView(movie: movie),
+          MovieDescriptionView(movie: movie),
           const SizedBox(height: 30),
 
           //* Generos
@@ -120,53 +132,6 @@ class _CustomSliverItem extends ConsumerWidget {
           const SizedBox(height: 50),
         ],
       ),
-    );
-  }
-}
-
-class _CardView extends StatelessWidget {
-  final Movie movie;
-  const _CardView({required this.movie});
-
-  @override
-  Widget build(BuildContext context) {
-    final sizes = MediaQuery.of(context).size;
-    final style = Theme.of(context).textTheme;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        //* imagen
-        SizedBox(
-          width: (0.3 * sizes.width - 20),
-          child: CustomImageView(
-            movie.posterPath,
-          ),
-        ),
-        const SizedBox(width: 10),
-
-        //* Texto
-        SizedBox(
-            width: 0.7 * sizes.width - 20,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //* Titulo
-                Text(
-                  movie.title,
-                  style: style.titleLarge,
-                  softWrap: true,
-                ),
-                const SizedBox(height: 5),
-
-                //* Resumen
-                Text(
-                  movie.overview,
-                  style: style.bodyLarge,
-                  softWrap: true,
-                ),
-              ],
-            ))
-      ],
     );
   }
 }

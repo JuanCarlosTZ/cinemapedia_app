@@ -66,8 +66,10 @@ class _HorizontalListviewActorState extends State<HorizontalListviewActor> {
                   children: [
                     CustomItemSlide(
                       caption: '${actor.name} - ${actor.character}',
-                      urlImage: actor.profilePath,
-                      placeholderAssetImage: AssetsImagesApp.avatarPerson01,
+                      urlImage: actor.profilePath.isEmpty
+                          ? AssetsImagesApp.avatarPerson01
+                          : actor.profilePath,
+                      isAssetImage: actor.profilePath.isEmpty,
                     ),
                   ],
                 );

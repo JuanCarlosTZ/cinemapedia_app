@@ -1,3 +1,4 @@
+import 'package:cinemapedia_app/config/constants/enums_app.dart';
 import 'package:cinemapedia_app/config/constants/environment.dart';
 import 'package:cinemapedia_app/domain/datasources/movies_datasource.dart';
 import 'package:cinemapedia_app/domain/entities/movie.dart';
@@ -10,8 +11,8 @@ class TheMoviedbDatasource extends MoviesDatasource {
   final dio = Dio(BaseOptions(
     baseUrl: Environment.datasourceConfiguration.baseUrl,
     queryParameters: <String, dynamic>{
-      'language': 'es-MX',
-      'api_key': Environment.datasourceConfiguration.apiKey,
+      QueryParameter.language: 'es-MX',
+      QueryParameter.apiKey: Environment.datasourceConfiguration.apiKey,
     },
   ));
 
@@ -46,27 +47,37 @@ class TheMoviedbDatasource extends MoviesDatasource {
   @override
   Future<List<Movie>> getNowPlaying({int page = 1}) async {
     return await _getList('/movie/now_playing',
-        queryParameters: {'page': page});
+        queryParameters: {QueryParameter.page: page});
   }
 
   @override
   Future<List<Movie>> getPopular({int page = 1}) async {
-    return await _getList('/movie/popular', queryParameters: {'page': page});
+    return await _getList('/movie/popular',
+        queryParameters: {QueryParameter.page: page});
   }
 
   @override
   Future<List<Movie>> getTopRated({int page = 1}) async {
-    return await _getList('/movie/top_rated', queryParameters: {'page': page});
+    return await _getList('/movie/top_rated',
+        queryParameters: {QueryParameter.page: page});
   }
 
   @override
   Future<List<Movie>> getUpcoming({int page = 1}) async {
-    return await _getList('/movie/upcoming', queryParameters: {'page': page});
+    return await _getList('/movie/upcoming',
+        queryParameters: {QueryParameter.page: page});
   }
 
   @override
   Future<Movie> getMovieById(String movieId) async {
     final movie = await _get('/movie/$movieId');
     return movie;
+  }
+
+  @override
+  Future<List<Movie>> getSearch(String query) async {
+    final movies = await _getList('/search/movie',
+        queryParameters: {QueryParameter.query: query});
+    return movies;
   }
 }

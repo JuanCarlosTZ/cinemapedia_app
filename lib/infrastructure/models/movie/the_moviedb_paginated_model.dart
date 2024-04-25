@@ -40,8 +40,8 @@ class TheMoviedbPagenatedModel {
   Map<String, dynamic> toJson() => {
         "dates": dates?.toJson(),
         "page": page,
-        "results":
-            List<dynamic>.from(theMoviedbModelList.map((x) => x.toJson())),
+        "results": List<TheMoviedbModel>.from(
+            theMoviedbModelList.map((x) => x.toJson())),
         "total_pages": totalPages,
         "total_results": totalResults,
       };

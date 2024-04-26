@@ -4,7 +4,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:cinemapedia_app/domain/entities/movie.dart';
 import 'package:cinemapedia_app/presentation/widgets/movie/movie_description_view.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 typedef SearchMoviesCallback = Future<List<Movie>> Function(String query);
 
@@ -84,7 +83,7 @@ class SearchMovieDelegate extends SearchDelegate<int?> {
     return IconButton(
       onPressed: () {
         movieStream.close();
-        context.pop();
+        close(context, null);
       },
       icon: const Icon(Icons.arrow_back_ios_new_outlined),
     );
@@ -147,10 +146,6 @@ class _BouncedMovies extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(
                     onTap: () => onPressed(movies[index].id),
-                    // () {
-                    //   movieStream.close();
-                    //   context.pop(movies[index].id);
-                    // },
                     child: MovieDescriptionView(
                       movie: movies[index],
                       isCompact: true,

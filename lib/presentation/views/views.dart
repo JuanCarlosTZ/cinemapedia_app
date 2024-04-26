@@ -1,0 +1,2 @@
+export 'package:cinemapedia_app/presentation/views/home/favorites_view.dart';
+export 'package:cinemapedia_app/presentation/views/home/home_view.dart';

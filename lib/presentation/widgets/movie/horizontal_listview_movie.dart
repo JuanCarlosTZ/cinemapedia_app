@@ -1,5 +1,5 @@
 import 'package:cinemapedia_app/config/constants/assets_images_app.dart';
-import 'package:cinemapedia_app/config/constants/route_parametes_app.dart';
+import 'package:cinemapedia_app/config/router/app_router.dart';
 import 'package:cinemapedia_app/domain/entities/movie.dart';
 import 'package:cinemapedia_app/presentation/screens.dart';
 import 'package:cinemapedia_app/presentation/widgets/shared/custom_item_slide.dart';
@@ -67,14 +67,14 @@ class _HorizontalListviewMovieState extends State<HorizontalListviewMovie> {
                 final movie = widget.movies[index];
 
                 return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     GestureDetector(
                       onTap: () {
                         context.goNamed(
                           MovieInfoScreen.name,
-                          pathParameters:
-                              RouteParametersApp.getMovieInfoParameters(
-                                  id: movie.id),
+                          pathParameters: AppRouter.getMovieInfoParameters(
+                              idPath: movie.id),
                         );
                       },
                       child: CustomItemSlide(
@@ -86,7 +86,7 @@ class _HorizontalListviewMovieState extends State<HorizontalListviewMovie> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      padding: const EdgeInsets.only(left: 3),
                       child: CustomRatedItems(
                         voteAverage: movie.voteAverage,
                         voteCount: movie.voteCount,

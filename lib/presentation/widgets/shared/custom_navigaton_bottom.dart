@@ -1,23 +1,22 @@
+import 'package:cinemapedia_app/config/router/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class CustomNavigationBottom extends StatefulWidget {
-  const CustomNavigationBottom({super.key});
+class CustomNavigationBottom extends StatelessWidget {
+  final int page;
+  const CustomNavigationBottom({super.key, required this.page});
 
-  @override
-  State<CustomNavigationBottom> createState() => _CustomNavigationBottomState();
-}
+  void onTapItem(BuildContext context, int page) {
+    context.go('/${AppRouter.home}/$page');
+  }
 
-class _CustomNavigationBottomState extends State<CustomNavigationBottom> {
-  int indexSelected = 0;
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       elevation: 0,
-      currentIndex: indexSelected,
+      currentIndex: page,
       onTap: (value) {
-        setState(() {
-          indexSelected = value;
-        });
+        onTapItem(context, value);
       },
       items: const [
         BottomNavigationBarItem(

@@ -115,8 +115,8 @@ class _CustomSliverAppbarState extends ConsumerState<_CustomSliverAppbar> {
         height: double.infinity,
       ),
       Positioned(
-          bottom: 60,
-          right: 20,
+          bottom: 10,
+          right: 10,
           child: CustomIconAction(
             color: isFavorite ? Colors.red : Colors.white,
             backgroundColor: Colors.black26,

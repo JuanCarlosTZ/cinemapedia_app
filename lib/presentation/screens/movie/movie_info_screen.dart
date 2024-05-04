@@ -1,7 +1,4 @@
-import 'package:cinemapedia_app/presentation/providers/movie/local_movies_provider.dart';
-import 'package:cinemapedia_app/presentation/providers/movie/local_movies_repository_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -9,11 +6,8 @@ import 'package:animate_do/animate_do.dart';
 
 import 'package:cinemapedia_app/config/constants/assets_images_app.dart';
 import 'package:cinemapedia_app/domain/entities/movie.dart';
-import 'package:cinemapedia_app/presentation/widgets/actor/horizontal_listview_actor.dart';
-import 'package:cinemapedia_app/presentation/widgets/movie/movie_description_view.dart';
-import 'package:cinemapedia_app/presentation/widgets/shared/custom_icon_action.dart';
+import 'package:cinemapedia_app/presentation/widgets/widgets.dart';
 import 'package:cinemapedia_app/presentation/providers/providers.dart';
-import 'package:isar/isar.dart';
 
 class MovieInfoScreen extends ConsumerStatefulWidget {
   static String name = 'movie_info_screen';
@@ -53,8 +47,7 @@ class MovieInfoScreenState extends ConsumerState<MovieInfoScreen> {
             SliverAppBar(
                 leading: CustomIconAction(onPressed: context.pop),
                 expandedHeight: 0.7 * size.height,
-                flexibleSpace:
-                    _CustomSliverAppbar(movie: movie, url: movie.posterPath)),
+                flexibleSpace: _CustomSliverAppbar(movie: movie)),
             SliverList(
                 delegate:
                     SliverChildBuilderDelegate(childCount: 1, (context, index) {
@@ -82,8 +75,7 @@ class _Loading extends StatelessWidget {
 
 class _CustomSliverAppbar extends ConsumerStatefulWidget {
   final Movie movie;
-  final String? url;
-  const _CustomSliverAppbar({required this.movie, this.url});
+  const _CustomSliverAppbar({required this.movie});
 
   @override
   _CustomSliverAppbarState createState() => _CustomSliverAppbarState();
@@ -108,7 +100,7 @@ class _CustomSliverAppbarState extends ConsumerState<_CustomSliverAppbar> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.url == null) {
+    if (widget.movie.posterPath == null) {
       return Image.asset(
         AssetsImagesApp.noPoster01,
         fit: BoxFit.cover,
@@ -118,7 +110,7 @@ class _CustomSliverAppbarState extends ConsumerState<_CustomSliverAppbar> {
 
     return Stack(fit: StackFit.expand, children: [
       Image.network(
-        widget.url!,
+        widget.movie.posterPath!,
         fit: BoxFit.cover,
         height: double.infinity,
       ),
@@ -131,12 +123,13 @@ class _CustomSliverAppbarState extends ConsumerState<_CustomSliverAppbar> {
             icon: isFavorite == true
                 ? Icons.favorite_rounded
                 : Icons.favorite_outline,
-            onPressed: () {
-              ref.read(tougleFavoriteProvider(widget.movie)).then((value) {
-                setState(() {
-                  print('check: $value');
-                  isFavorite = value;
-                });
+            onPressed: () async {
+              final tougleFavorite =
+                  await ref.read(tougleFavoriteProvider(widget.movie));
+              await ref.read(localMoviesProvider.notifier).resetPage();
+
+              setState(() {
+                isFavorite = tougleFavorite;
               });
             },
           )),

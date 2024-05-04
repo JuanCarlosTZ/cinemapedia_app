@@ -27,7 +27,9 @@ class LocalMoviesDatasource extends LocalStorageMoviesDatasource {
   @override
   Future<List<Movie>> getFavorites({int limit = 10, int offset = 0}) async {
     final isar = await db;
-    return isar.movies.where().offset(offset).limit(limit).findAll();
+    final movies =
+        await isar.movies.where().offset(offset).limit(limit).findAll();
+    return movies;
   }
 
   @override
@@ -37,7 +39,8 @@ class LocalMoviesDatasource extends LocalStorageMoviesDatasource {
     final isFavorite = !isar.movies.filter().idEqualTo(movie.id).isEmptySync();
 
     if (isFavorite) {
-      isar.writeTxnSync(() => isar.movies.deleteSync(movie.isarId!));
+      isar.writeTxnSync(
+          () => isar.movies.filter().idEqualTo(movie.id).deleteAllSync());
       return Future.value(!isFavorite);
     }
 

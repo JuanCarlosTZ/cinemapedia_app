@@ -13,7 +13,7 @@ class MoviesDetailNotifier extends StateNotifier<Map<String, Movie>> {
 
   Future<void> loadMovieById(String movieId) async {
     if (state[movieId] != null) return;
-    print('movieId: $movieId');
+
     final movie = await getMovie(movieId);
 
     state = {...state, movieId: movie};

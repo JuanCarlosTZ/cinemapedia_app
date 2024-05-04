@@ -1,5 +1,6 @@
 import 'package:cinemapedia_app/domain/entities/movie.dart';
 import 'package:cinemapedia_app/presentation/providers/movie/local_movies_repository_provider.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 typedef LocalMoviesCallback = Future<List<Movie>> Function(
@@ -7,14 +8,34 @@ typedef LocalMoviesCallback = Future<List<Movie>> Function(
 typedef TougleFavoriteCallback = Future<bool> Function({required Movie movie});
 
 class LocalMovies extends StateNotifier<List<Movie>> {
+  int currentPage = 0;
+  final limit = 10;
+
+  bool isLoading = false;
+
   final LocalMoviesCallback loadMoviesCallback;
   LocalMovies({required this.loadMoviesCallback}) : super([]);
 
-  Future<List<Movie>> loadMovies({int limit = 10, int offoset = 0}) async {
-    final movies = await loadMoviesCallback(limit: 10, offset: offoset);
+  Future<void> loadNextPage() async {
+    if (isLoading || state.length < currentPage * limit) return;
 
+    isLoading = true;
+    final movies =
+        await loadMoviesCallback(limit: limit, offset: currentPage * limit);
     state = [...state, ...movies];
-    return movies;
+
+    currentPage++;
+    isLoading = false;
+
+    return;
+  }
+
+  Future<void> resetPage() async {
+    currentPage = 0;
+    state = [];
+    Future.delayed(Durations.medium2);
+    await loadNextPage();
+    return;
   }
 }
 

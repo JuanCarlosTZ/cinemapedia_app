@@ -1,4 +1,4 @@
-import 'package:cinemapedia_app/config/constants/enums_app.dart';
+import 'package:cinemapedia_app/config/constants/query_parameter.dart';
 import 'package:cinemapedia_app/config/constants/environment.dart';
 import 'package:cinemapedia_app/domain/datasources/movies_datasource.dart';
 import 'package:cinemapedia_app/domain/entities/movie.dart';

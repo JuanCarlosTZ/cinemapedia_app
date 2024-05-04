@@ -1,11 +1,8 @@
-import 'package:cinemapedia_app/config/constants/assets_images_app.dart';
-import 'package:cinemapedia_app/config/router/app_router.dart';
-import 'package:cinemapedia_app/domain/entities/movie.dart';
-import 'package:cinemapedia_app/presentation/screens.dart';
-import 'package:cinemapedia_app/presentation/widgets/shared/custom_item_slide.dart';
-import 'package:cinemapedia_app/presentation/widgets/shared/custom_rated_items.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
+import 'package:cinemapedia_app/config/constants/navigation_parameters.dart';
+import 'package:cinemapedia_app/domain/entities/movie.dart';
+import 'package:cinemapedia_app/presentation/widgets/movie/custom_poster_item_view.dart';
 
 class HorizontalListviewMovie extends StatefulWidget {
   final String? title;
@@ -66,33 +63,9 @@ class _HorizontalListviewMovieState extends State<HorizontalListviewMovie> {
               itemBuilder: (context, index) {
                 final movie = widget.movies[index];
 
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        context.goNamed(
-                          MovieInfoScreen.name,
-                          pathParameters: AppRouter.getMovieInfoParameters(
-                              idPath: movie.id),
-                        );
-                      },
-                      child: CustomItemSlide(
-                        caption: movie.title ?? "",
-                        urlImage: movie.posterPath == null
-                            ? AssetsImagesApp.avatarPerson01
-                            : movie.posterPath!,
-                        isAssetImage: movie.posterPath == null,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 3),
-                      child: CustomRatedItems(
-                        voteAverage: movie.voteAverage,
-                        voteCount: movie.voteCount,
-                      ),
-                    ),
-                  ],
+                return CustomPosterItemView(
+                  movie: movie,
+                  page: NavigationParameters.homeView,
                 );
               },
             ),

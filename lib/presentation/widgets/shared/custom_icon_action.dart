@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class CustomBackAction extends StatelessWidget {
+class CustomIconAction extends StatelessWidget {
   final IconData icon;
   final Color color;
   final Color backgroundColor;
   final VoidCallback? onPressed;
 
-  const CustomBackAction({
+  const CustomIconAction({
     super.key,
     this.onPressed,
     this.icon = Icons.arrow_back_ios_new,

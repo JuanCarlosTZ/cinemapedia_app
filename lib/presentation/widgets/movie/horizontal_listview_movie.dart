@@ -78,7 +78,7 @@ class _HorizontalListviewMovieState extends State<HorizontalListviewMovie> {
                         );
                       },
                       child: CustomItemSlide(
-                        caption: movie.title,
+                        caption: movie.title ?? "",
                         urlImage: movie.posterPath == null
                             ? AssetsImagesApp.avatarPerson01
                             : movie.posterPath!,

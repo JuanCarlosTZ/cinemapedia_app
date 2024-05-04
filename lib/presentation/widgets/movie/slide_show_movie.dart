@@ -33,7 +33,7 @@ class SlideShowMovie extends StatelessWidget {
           return CustomImageView(
             topPadding: 5,
             bottomPadding: 30,
-            movies[index].backdropPath,
+            movies[index].backdropPath ?? '',
           );
         },
       ),

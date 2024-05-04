@@ -6,3 +6,5 @@ final theMoviedbRepositoryProvider = Provider<MoviesRepositoryImpl>((ref) {
   final datasource = TheMoviedbDatasource();
   return MoviesRepositoryImpl(datasource);
 });
+
+

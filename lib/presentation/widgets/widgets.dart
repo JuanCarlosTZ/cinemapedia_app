@@ -4,7 +4,7 @@ export 'package:cinemapedia_app/presentation/widgets/movie/horizontal_listview_m
 export 'package:cinemapedia_app/presentation/widgets/movie/movie_description_view.dart';
 export 'package:cinemapedia_app/presentation/widgets/movie/slide_show_movie.dart';
 export 'package:cinemapedia_app/presentation/widgets/shared/custom_appbar.dart';
-export 'package:cinemapedia_app/presentation/widgets/shared/custom_back_action.dart';
+export 'package:cinemapedia_app/presentation/widgets/shared/custom_icon_action.dart';
 export 'package:cinemapedia_app/presentation/widgets/shared/custom_item_slide.dart';
 export 'package:cinemapedia_app/presentation/widgets/shared/custom_navigaton_bottom.dart';
 export 'package:cinemapedia_app/presentation/widgets/shared/custom_rated_items.dart';

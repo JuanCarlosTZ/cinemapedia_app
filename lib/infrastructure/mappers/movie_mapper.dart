@@ -5,28 +5,29 @@ import 'package:cinemapedia_app/infrastructure/models/movie/tmdb_movie_details_m
 
 class MovieMapper {
   static Movie tmdbMovieDetailsModelToEntity(
-          TmdbMovieDetailsModel tmdbMovieDetailsModel) =>
-      Movie(
-        adult: tmdbMovieDetailsModel.adult,
-        backdropPath: (tmdbMovieDetailsModel.backdropPath != '')
-            ? 'https://image.tmdb.org/t/p/w500${tmdbMovieDetailsModel.backdropPath}'
-            : 'https://sd.keepcalms.com/i-w600/keep-calm-poster-not-found.jpg',
-        genreIds:
-            tmdbMovieDetailsModel.genres.map((gender) => gender.name).toList(),
-        id: tmdbMovieDetailsModel.id,
-        originalLanguage: tmdbMovieDetailsModel.originalLanguage,
-        originalTitle: tmdbMovieDetailsModel.originalTitle,
-        overview: tmdbMovieDetailsModel.overview,
-        popularity: tmdbMovieDetailsModel.popularity,
-        posterPath: (tmdbMovieDetailsModel.posterPath != '')
-            ? 'https://image.tmdb.org/t/p/w500${tmdbMovieDetailsModel.posterPath}'
-            : '',
-        releaseDate: tmdbMovieDetailsModel.releaseDate,
-        title: tmdbMovieDetailsModel.title,
-        video: tmdbMovieDetailsModel.video,
-        voteAverage: tmdbMovieDetailsModel.voteAverage,
-        voteCount: tmdbMovieDetailsModel.voteCount,
-      );
+      TmdbMovieDetailsModel tmdbMovieDetailsModel) {
+    return Movie(
+      adult: tmdbMovieDetailsModel.adult,
+      backdropPath: (tmdbMovieDetailsModel.backdropPath != '')
+          ? 'https://image.tmdb.org/t/p/w500${tmdbMovieDetailsModel.backdropPath}'
+          : 'https://sd.keepcalms.com/i-w600/keep-calm-poster-not-found.jpg',
+      genreIds:
+          tmdbMovieDetailsModel.genres.map((gender) => gender.name).toList(),
+      id: tmdbMovieDetailsModel.id,
+      originalLanguage: tmdbMovieDetailsModel.originalLanguage,
+      originalTitle: tmdbMovieDetailsModel.originalTitle,
+      overview: tmdbMovieDetailsModel.overview,
+      popularity: tmdbMovieDetailsModel.popularity,
+      posterPath: (tmdbMovieDetailsModel.posterPath != '')
+          ? 'https://image.tmdb.org/t/p/w500${tmdbMovieDetailsModel.posterPath}'
+          : '',
+      releaseDate: tmdbMovieDetailsModel.releaseDate,
+      title: tmdbMovieDetailsModel.title,
+      video: tmdbMovieDetailsModel.video,
+      voteAverage: tmdbMovieDetailsModel.voteAverage,
+      voteCount: tmdbMovieDetailsModel.voteCount,
+    );
+  }
 
   static Movie theMoviedbModelToEntity(TheMoviedbModel theMoviedbModel) =>
       Movie(

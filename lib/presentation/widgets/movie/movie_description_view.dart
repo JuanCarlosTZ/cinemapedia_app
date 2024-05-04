@@ -44,7 +44,7 @@ class MovieDescriptionView extends StatelessWidget {
             children: [
               //* Titulo
               Text(
-                movie.title,
+                movie.title ?? '',
                 style: isCompact ? style.titleMedium : style.titleLarge,
                 softWrap: true,
                 maxLines: isCompact ? 3 : null,
@@ -55,7 +55,7 @@ class MovieDescriptionView extends StatelessWidget {
 
               isCompact
                   ? Text(
-                      movie.overview,
+                      movie.overview ?? '',
                       softWrap: true,
                       maxLines: 3,
                       style: style.bodyMedium?.copyWith(
@@ -63,7 +63,7 @@ class MovieDescriptionView extends StatelessWidget {
                       ),
                     )
                   : Text(
-                      movie.overview,
+                      movie.overview ?? '',
                       style: style.bodyLarge,
                       softWrap: true,
                     ),

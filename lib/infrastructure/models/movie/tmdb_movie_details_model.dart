@@ -1,3 +1,5 @@
+import 'package:cinemapedia_app/infrastructure/models/movie/tmdb_gender_model.dart';
+
 class TmdbMovieDetailsModel {
   TmdbMovieDetailsModel({
     required this.adult,
@@ -31,7 +33,7 @@ class TmdbMovieDetailsModel {
   final String backdropPath;
   final BelongsToCollection? belongsToCollection;
   final int budget;
-  final List<Genre> genres;
+  final List<GenreModel> genres;
   final String homepage;
   final int id;
   final String imdbId;
@@ -61,7 +63,8 @@ class TmdbMovieDetailsModel {
             ? null
             : BelongsToCollection.fromJson(json["belongs_to_collection"]),
         budget: json["budget"],
-        genres: List<Genre>.from(json["genres"].map((x) => Genre.fromJson(x))),
+        genres: List<GenreModel>.from(
+            json["genres"].map((x) => GenreModel.fromJson(x))),
         homepage: json["homepage"],
         id: json["id"],
         imdbId: json["imdb_id"] ?? '',
@@ -151,26 +154,6 @@ class BelongsToCollection {
         "name": name,
         "poster_path": posterPath,
         "backdrop_path": backdropPath,
-      };
-}
-
-class Genre {
-  Genre({
-    required this.id,
-    required this.name,
-  });
-
-  final int id;
-  final String name;
-
-  factory Genre.fromJson(Map<String, dynamic> json) => Genre(
-        id: json["id"],
-        name: json["name"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
       };
 }
 

@@ -27,7 +27,7 @@ class CustomNavigationBottom extends StatelessWidget {
         BottomNavigationBarItem(
           activeIcon: Icon(Icons.label),
           icon: Icon(Icons.label_outline),
-          label: 'Categorias',
+          label: 'Muy pronto',
         ),
         BottomNavigationBarItem(
           activeIcon: Icon(Icons.favorite),

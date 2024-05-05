@@ -39,21 +39,51 @@ class FavoriteViewState extends ConsumerState<FavoriteView> {
   @override
   Widget build(BuildContext context) {
     final moviesProvider = ref.watch(localMoviesProvider);
+
     return Scaffold(
-      body: MasonryGridView.count(
-        controller: controller,
-        itemCount: moviesProvider.length,
-        crossAxisCount: 3,
-        itemBuilder: (context, index) {
-          final movie = moviesProvider[index];
-          return Container(
-            margin: const EdgeInsets.symmetric(vertical: 10),
-            child: CustomPosterItemView(
-              movie: movie,
-              page: NavigationParameters.favoriteView,
+      body: moviesProvider.isEmpty
+          ? const NonFavoriteMovies()
+          : MasonryGridView.count(
+              controller: controller,
+              itemCount: moviesProvider.length,
+              crossAxisCount: 3,
+              itemBuilder: (context, index) {
+                final movie = moviesProvider[index];
+                return Container(
+                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  child: CustomPosterItemView(
+                    movie: movie,
+                    page: NavigationParameters.favoriteView,
+                  ),
+                );
+              },
             ),
-          );
-        },
+    );
+  }
+}
+
+class NonFavoriteMovies extends StatelessWidget {
+  const NonFavoriteMovies({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.favorite_border_sharp,
+            size: 40,
+            color: colors.primary,
+          ),
+          Text(
+            "Sin agregar",
+            style: TextStyle(color: colors.primary, fontSize: 30),
+          ),
+          const Text("No hay peliculas favoritas agregadas."),
+        ],
       ),
     );
   }

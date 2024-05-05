@@ -80,4 +80,10 @@ class TheMoviedbDatasource extends MoviesDatasource {
         queryParameters: {QueryParameter.query: query});
     return movies;
   }
+
+  @override
+  Future<List<Movie>> getRecommendation(String movieId) async {
+    final movies = await _getList('/movie/$movieId/recommendations');
+    return movies;
+  }
 }

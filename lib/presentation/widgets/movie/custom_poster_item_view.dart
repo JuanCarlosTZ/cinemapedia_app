@@ -1,7 +1,6 @@
 import 'package:cinemapedia_app/config/constants/assets_images_app.dart';
 import 'package:cinemapedia_app/config/router/app_router.dart';
 import 'package:cinemapedia_app/domain/entities/movie.dart';
-import 'package:cinemapedia_app/presentation/screens.dart';
 import 'package:cinemapedia_app/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -25,10 +24,9 @@ class CustomPosterItemView extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            context.goNamed(
-              MovieInfoScreen.name,
-              pathParameters: AppRouter.getMovieInfoParameters(
-                  idPath: movie.id, pageIndex: page),
+            context.push(
+              AppRouter.getMovieInfoPath(
+                  movieId: movie.id.toString(), pageIndex: page),
             );
           },
           child: CustomItemSlide(

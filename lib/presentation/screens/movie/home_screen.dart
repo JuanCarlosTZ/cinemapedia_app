@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:cinemapedia_app/presentation/widgets/shared/custom_navigaton_bottom.dart';
 import 'package:cinemapedia_app/presentation/views/home/home_view.dart';
+import 'package:cinemapedia_app/presentation/views/home/upcoming_view.dart';
 
 class HomeScreen extends StatelessWidget {
   static String name = 'home_screen';
@@ -11,7 +12,7 @@ class HomeScreen extends StatelessWidget {
 
   final List<Widget> pageWiews = const [
     HomeView(),
-    SizedBox(),
+    UpcomingView(),
     FavoriteView(),
   ];
 

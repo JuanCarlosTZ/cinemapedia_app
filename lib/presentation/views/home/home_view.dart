@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:cinemapedia_app/presentation/screens.dart';
 import 'package:cinemapedia_app/presentation/widgets/widgets.dart';
 import 'package:cinemapedia_app/presentation/providers/providers.dart';
 import 'package:cinemapedia_app/presentation/delegates/search_movie_delegate.dart';
@@ -39,7 +38,6 @@ class HomeViewState extends ConsumerState<HomeView> {
     final topTenMovies = ref.watch(customPopularTopTenProvider);
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
     final topRatedMovies = ref.watch(topRatedMoviesProvider);
-    final upcomingMovies = ref.watch(upcomingMoviesProvider);
     final searchMovies = ref.watch(searchMoviesProvider);
 
     final List<Widget> sliverContent = [
@@ -65,14 +63,6 @@ class HomeViewState extends ConsumerState<HomeView> {
         header: 'Top 10',
         movies: topTenMovies,
       ),
-      HorizontalListviewMovie(
-        title: "Muy pronto",
-        header: 'Solo en cines',
-        movies: upcomingMovies,
-        loadNextPage: () {
-          ref.read(upcomingMoviesProvider.notifier).loadNextPage();
-        },
-      )
     ];
 
     return CustomScrollView(
@@ -95,10 +85,8 @@ class HomeViewState extends ConsumerState<HomeView> {
                     },
                   )).then((value) {
                 if (value != null) {
-                  context.goNamed(
-                    MovieInfoScreen.name,
-                    pathParameters:
-                        AppRouter.getMovieInfoParameters(idPath: value),
+                  context.push(
+                    AppRouter.getMovieInfoPath(movieId: value.toString()),
                   );
                 }
               });

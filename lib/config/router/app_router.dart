@@ -8,12 +8,8 @@ class AppRouter {
   static const String movie = 'movie';
   static const String notId = 'no-id';
 
-  static Map<String, String> getMovieInfoParameters(
-      {required int idPath, int pageIndex = 0}) {
-    return <String, String>{
-      id: idPath.toString(),
-      page: pageIndex.toString(),
-    };
+  static String getMovieInfoPath({required String movieId, int pageIndex = 0}) {
+    return '/$home/:$page/$movie/$movieId';
   }
 
   static String getHomeRoutePath(int page) {
@@ -21,7 +17,7 @@ class AppRouter {
   }
 
   final appRouter = GoRouter(
-    initialLocation: '/',
+    initialLocation: '/$home/:$page',
     routes: [
       GoRoute(
         path: '/',

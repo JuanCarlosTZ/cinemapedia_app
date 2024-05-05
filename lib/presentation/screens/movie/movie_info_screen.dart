@@ -1,3 +1,6 @@
+import 'package:cinemapedia_app/presentation/providers/video/videos_provider.dart';
+import 'package:cinemapedia_app/presentation/widgets/movie/horizontal_listview_video.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,6 +27,7 @@ class MovieInfoScreenState extends ConsumerState<MovieInfoScreen> {
     super.initState();
     ref.read(movieDetailProvider.notifier).loadMovieById(widget.movieId);
     ref.read(actorsProvider.notifier).loadActors(widget.movieId);
+    ref.read(moviesRecommendationProvider.notifier).loadMovies(widget.movieId);
   }
 
   @override
@@ -144,6 +148,9 @@ class _CustomSliverItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final actors = ref.watch(actorsProvider)[movie.id.toString()];
+    final moviesRecommendation = ref.watch(moviesRecommendationProvider);
+    final traillersProvider = ref.watch(traillerProvider(movie.id.toString()));
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
       child: Column(
@@ -167,6 +174,35 @@ class _CustomSliverItem extends ConsumerWidget {
             title: 'Actores',
             header: actors?.length.toString(),
             actors: actors ?? [],
+          ),
+
+          //* Trailles
+          FutureBuilder(
+            future: traillersProvider,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return const SizedBox();
+              }
+
+              if (snapshot.data?.isEmpty == true) {
+                return const SizedBox();
+              }
+
+              final traillers = snapshot.data!;
+
+              return HorizontalListviewVideo(
+                title: 'Trailer',
+                videos: traillers,
+                header: traillers.length.toString(),
+              );
+            },
+          ),
+
+          //* Recomendaciones
+          HorizontalListviewMovie(
+            title: 'Recomendaciones',
+            header: moviesRecommendation.length.toString(),
+            movies: moviesRecommendation,
           ),
           const SizedBox(height: 50),
         ],

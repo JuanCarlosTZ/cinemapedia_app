@@ -38,6 +38,7 @@ class HomeViewState extends ConsumerState<HomeView> {
     final topTenMovies = ref.watch(customPopularTopTenProvider);
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
     final topRatedMovies = ref.watch(topRatedMoviesProvider);
+    final upcomingMovies = ref.watch(upcomingMoviesProvider);
     final searchMovies = ref.watch(searchMoviesProvider);
 
     final List<Widget> sliverContent = [
@@ -62,6 +63,10 @@ class HomeViewState extends ConsumerState<HomeView> {
         title: "Populares",
         header: 'Top 10',
         movies: topTenMovies,
+      ),
+      HorizontalListviewMovie(
+        title: "Muy pronto",
+        movies: upcomingMovies,
       ),
     ];
 

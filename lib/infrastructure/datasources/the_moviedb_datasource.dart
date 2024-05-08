@@ -86,4 +86,25 @@ class TheMoviedbDatasource extends MoviesDatasource {
     final movies = await _getList('/movie/$movieId/recommendations');
     return movies;
   }
+
+  @override
+  Future<List<Movie>> getByCategory(
+      {int page = 1, List<int>? categoryIds}) async {
+    String categoriesString = '';
+
+    categoryIds?.forEach((id) {
+      if (categoriesString.isEmpty) {
+        categoriesString = '$id';
+        return;
+      }
+
+      categoriesString = '$categoriesString,$id';
+    });
+
+    final movies = await _getList('/discover/movie', queryParameters: {
+      QueryParameter.page: page,
+      QueryParameter.categoties: categoriesString,
+    });
+    return movies;
+  }
 }

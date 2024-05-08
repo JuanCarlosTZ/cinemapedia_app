@@ -41,4 +41,10 @@ class MoviesRepositoryImpl extends MoviesRepository {
   Future<List<Movie>> getRecommendation(String movieId) async {
     return await datasource.getRecommendation(movieId);
   }
+
+  @override
+  Future<List<Movie>> getByCategory(
+      {int page = 1, List<int>? categoryIds}) async {
+    return await datasource.getByCategory(page: page, categoryIds: categoryIds);
+  }
 }

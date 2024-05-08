@@ -4,4 +4,5 @@ class QueryParameter {
   static String query = 'query';
   static String apiKey = 'api_key';
   static String language = 'language';
+  static String categoties = 'with_genres';
 }

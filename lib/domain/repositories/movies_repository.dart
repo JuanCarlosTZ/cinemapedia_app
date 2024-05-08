@@ -8,4 +8,5 @@ abstract class MoviesRepository {
   Future<Movie> getMovieById(String movieId);
   Future<List<Movie>> getSearch(String query);
   Future<List<Movie>> getRecommendation(String movieId);
+  Future<List<Movie>> getByCategory({int page = 1, List<int>? categoryIds});
 }

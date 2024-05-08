@@ -22,6 +22,6 @@ class TmdbGenresDatasource extends GenreDatasource {
 
   @override
   Future<List<Genre>> getGenres() async {
-    return await _getList('/genre/video/list');
+    return await _getList('/genre/movie/list');
   }
 }

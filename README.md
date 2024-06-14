@@ -12,3 +12,13 @@ flutter pub run build_runner build
 ```
 dart run package_rename
 ```
+5. usar flutter_launcher_icons para cambiar los iconos del app
+6. usar flutter_native_splash. Usar el commando para ejecutar los cambios:
+```
+dart run flutter_native_splash:create
+```
+
+Para crear al Android AAB
+```
+flutter build appbundle
+```

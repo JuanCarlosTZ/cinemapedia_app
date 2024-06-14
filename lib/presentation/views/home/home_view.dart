@@ -1,4 +1,5 @@
 import 'package:cinemapedia_app/config/router/app_router.dart';
+import 'package:cinemapedia_app/infrastructure/services/app_initialize_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -32,6 +33,11 @@ class HomeViewState extends ConsumerState<HomeView> {
     }
   }
 
+  void _validateFirstLoaded(List<List<Object?>> states) {
+    if (states.contains([])) return;
+    AppInitializeService.removeFlutterNativeSplash();
+  }
+
   @override
   Widget build(BuildContext context) {
     final mainShowMovies = ref.watch(swipeShowMoviesProvider);
@@ -40,6 +46,14 @@ class HomeViewState extends ConsumerState<HomeView> {
     final topRatedMovies = ref.watch(topRatedMoviesProvider);
     final upcomingMovies = ref.watch(upcomingMoviesProvider);
     final searchMovies = ref.watch(searchMoviesProvider);
+
+    _validateFirstLoaded([
+      mainShowMovies,
+      topTenMovies,
+      nowPlayingMovies,
+      topRatedMovies,
+      upcomingMovies,
+    ]);
 
     final List<Widget> sliverContent = [
       SlideShowMovie(mainShowMovies),

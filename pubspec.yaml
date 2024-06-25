@@ -42,8 +42,8 @@ package_rename_config:
 
   ios:
     app_name: Cinemapedia TZ
-    bundle_name: cinamepedia_tz
-    package_name: com.juancarlostz.cinemapedia_tz
+    bundle_name: Cinamepedia TZ
+    package_name: com.juancarlostz.cinemapediatz
 
 flutter_launcher_icons:
   android: "launcher_icon"

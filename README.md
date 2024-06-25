@@ -12,7 +12,11 @@ flutter pub run build_runner build
 ```
 dart run package_rename
 ```
-5. usar flutter_launcher_icons para cambiar los iconos del app
+5. usar flutter_launcher_icons para cambiar los iconos del app con el comando:
+```
+flutter pub run flutter_launcher_icons
+```
+
 6. usar flutter_native_splash. Usar el commando para ejecutar los cambios:
 ```
 dart run flutter_native_splash:create

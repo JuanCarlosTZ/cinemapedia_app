@@ -26,3 +26,8 @@ Para crear al Android AAB
 ```
 flutter build appbundle
 ```
+
+Para crear al Android AAB
+```
+flutter build ipa
+```

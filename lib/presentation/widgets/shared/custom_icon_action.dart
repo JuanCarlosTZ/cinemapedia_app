@@ -10,8 +10,8 @@ class CustomIconAction extends StatelessWidget {
     super.key,
     this.onPressed,
     this.icon = Icons.arrow_back_ios_new,
-    this.color = Colors.black,
-    this.backgroundColor = Colors.white24,
+    this.color = Colors.white,
+    this.backgroundColor = Colors.black12,
   });
 
   @override

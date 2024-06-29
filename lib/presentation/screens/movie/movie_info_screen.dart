@@ -123,7 +123,6 @@ class _CustomSliverAppbarState extends ConsumerState<_CustomSliverAppbar> {
           right: 10,
           child: CustomIconAction(
             color: isFavorite ? Colors.red : Colors.white,
-            backgroundColor: Colors.black26,
             icon: isFavorite == true
                 ? Icons.favorite_rounded
                 : Icons.favorite_outline,

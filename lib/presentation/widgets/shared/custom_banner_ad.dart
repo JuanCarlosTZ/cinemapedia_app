@@ -8,7 +8,9 @@ class CustomBannerAd extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: bannerAd.size.width.toDouble(),
+      width: double.infinity,
+      // width: double.infinity,
+      // width: bannerAd.size.width.toDouble(),
       height: bannerAd.size.height.toDouble(),
       child: AdWidget(ad: bannerAd),
     );

@@ -22,6 +22,9 @@ flutter pub run flutter_launcher_icons
 dart run flutter_native_splash:create
 ```
 
+7. usar los id de google ads en el .env 
+y en su respectiva configuracion en el androidManifest y PodFile
+
 Para crear al Android AAB
 ```
 flutter build appbundle

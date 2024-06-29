@@ -6,3 +6,4 @@ export 'package:cinemapedia_app/presentation/providers/actor/actors_repository_p
 export 'package:cinemapedia_app/presentation/providers/actor/actors_provider.dart';
 export 'package:cinemapedia_app/presentation/providers/movie/movie_search_provider.dart';
 export 'package:cinemapedia_app/presentation/providers/movie/local_movies_provider.dart';
+export 'package:cinemapedia_app/presentation/providers/service/banner_ad_provider.dart';

@@ -8,3 +8,4 @@ export 'package:cinemapedia_app/presentation/widgets/shared/custom_icon_action.d
 export 'package:cinemapedia_app/presentation/widgets/shared/custom_item_slide.dart';
 export 'package:cinemapedia_app/presentation/widgets/shared/custom_navigaton_bottom.dart';
 export 'package:cinemapedia_app/presentation/widgets/shared/custom_rated_items.dart';
+export 'package:cinemapedia_app/presentation/widgets/shared/custom_banner_ad.dart';

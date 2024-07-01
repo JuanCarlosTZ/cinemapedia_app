@@ -6,13 +6,13 @@ class GoogleAdsConfig {
     iOSAppAdsId: dotenv.env['appleAppAdsId'] ?? "",
     androidAppAdsId: dotenv.env['androidAppAdsId'] ?? "",
 
-    //bannerAdUnitId
-    // iOSUnitAdsId: dotenv.env['appleUnitAdsId'] ?? "",
-    // androidUnitAdsId: dotenv.env['androidUnitAdsId'] ?? "",
+    // bannerAdUnitId
+    iOSUnitAdsId: dotenv.env['appleUnitAdsId'] ?? "",
+    androidUnitAdsId: dotenv.env['androidUnitAdsId'] ?? "",
 
     //bannerAdUnitId Test
-    iOSUnitAdsId: 'ca-app-pub-3940256099942544/2934735716',
-    androidUnitAdsId: 'ca-app-pub-3940256099942544/6300978111',
+    // iOSUnitAdsId: 'ca-app-pub-3940256099942544/2934735716',
+    // androidUnitAdsId: 'ca-app-pub-3940256099942544/6300978111',
   );
 }
 

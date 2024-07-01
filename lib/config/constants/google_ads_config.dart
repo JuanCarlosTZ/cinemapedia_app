@@ -3,24 +3,28 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class GoogleAdsConfig {
   static final configuration = _GoogleAdsConfiguration(
     //deviceAppId
-    appleAppAdsId: dotenv.env['appleAppAdsId'] ?? "",
+    iOSAppAdsId: dotenv.env['appleAppAdsId'] ?? "",
     androidAppAdsId: dotenv.env['androidAppAdsId'] ?? "",
 
     //bannerAdUnitId
-    appleUnitAdsId: dotenv.env['appleUnitAdsId'] ?? "",
-    androidUnitAdsId: dotenv.env['androidUnitAdsId'] ?? "",
+    // iOSUnitAdsId: dotenv.env['appleUnitAdsId'] ?? "",
+    // androidUnitAdsId: dotenv.env['androidUnitAdsId'] ?? "",
+
+    //bannerAdUnitId Test
+    iOSUnitAdsId: 'ca-app-pub-3940256099942544/2934735716',
+    androidUnitAdsId: 'ca-app-pub-3940256099942544/6300978111',
   );
 }
 
 class _GoogleAdsConfiguration {
-  final String appleAppAdsId;
-  final String appleUnitAdsId;
+  final String iOSAppAdsId;
+  final String iOSUnitAdsId;
   final String androidAppAdsId;
   final String androidUnitAdsId;
 
   _GoogleAdsConfiguration({
-    required this.appleAppAdsId,
-    required this.appleUnitAdsId,
+    required this.iOSAppAdsId,
+    required this.iOSUnitAdsId,
     required this.androidAppAdsId,
     required this.androidUnitAdsId,
   });

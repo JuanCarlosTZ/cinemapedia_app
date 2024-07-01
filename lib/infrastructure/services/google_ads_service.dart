@@ -5,11 +5,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 class GoogleAdsService {
   final homeAdUnitId = Platform.isAndroid
       ? GoogleAdsConfig.configuration.androidUnitAdsId
-      : GoogleAdsConfig.configuration.appleUnitAdsId;
-
-  // final homeAdUnitId = Platform.isAndroid
-  //     ? 'ca-app-pub-3940256099942544/6300978111'
-  //     : 'ca-app-pub-3940256099942544/2934735716';
+      : GoogleAdsConfig.configuration.iOSUnitAdsId;
 
   /// Loads a banner ad.
   BannerAd homeBannerAd(void Function(Ad)? onAdLoaded) {

@@ -16,15 +16,9 @@ class GoogleAdsStateNotifier extends StateNotifier<BannerAd?> {
   void loadAd() {
     if (state != null) null;
     _bannerAd = googleAdsService.homeBannerAd((ad) {
-      scheaduleBannerAd();
+      state = _bannerAd;
     });
     state = _bannerAd;
-  }
-
-  void scheaduleBannerAd() async {
-    await Future.delayed(const Duration(seconds: 20)).then((_) {
-      _bannerAd?.load();
-    });
   }
 }
 

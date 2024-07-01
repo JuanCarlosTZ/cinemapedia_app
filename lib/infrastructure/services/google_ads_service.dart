@@ -7,6 +7,10 @@ class GoogleAdsService {
       ? GoogleAdsConfig.configuration.androidUnitAdsId
       : GoogleAdsConfig.configuration.appleUnitAdsId;
 
+  // final homeAdUnitId = Platform.isAndroid
+  //     ? 'ca-app-pub-3940256099942544/6300978111'
+  //     : 'ca-app-pub-3940256099942544/2934735716';
+
   /// Loads a banner ad.
   BannerAd homeBannerAd(void Function(Ad)? onAdLoaded) {
     return BannerAd(

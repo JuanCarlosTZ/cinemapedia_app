@@ -9,4 +9,6 @@ class Helpers {
     ).format(number);
     return formattedNumber;
   }
+
+  static DateTime defaultDatetime() => DateTime(1970, 1, 1);
 }

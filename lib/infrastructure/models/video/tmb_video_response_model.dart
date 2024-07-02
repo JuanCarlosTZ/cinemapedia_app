@@ -1,3 +1,5 @@
+import 'package:cinemapedia_app/config/configs.dart';
+
 class TmdbVideoResponseModel {
   final int id;
   final List<TmdbVideoModel> results;
@@ -54,7 +56,8 @@ class TmdbVideoModel {
         size: json["size"],
         type: json["type"],
         official: json["official"],
-        publishedAt: DateTime.parse(json["published_at"]),
+        publishedAt: DateTime.tryParse(json["published_at"]) ??
+            Helpers.defaultDatetime(),
         id: json["id"],
       );
 

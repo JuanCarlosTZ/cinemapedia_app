@@ -115,8 +115,14 @@ class _CustomSliverAppbarState extends ConsumerState<_CustomSliverAppbar> {
     return Stack(fit: StackFit.expand, children: [
       Image.network(
         widget.movie.posterPath!,
-        fit: BoxFit.cover,
         height: double.infinity,
+        errorBuilder: (context, error, stackTrace) {
+          return Image.asset(
+            AssetsImagesApp.noPoster01,
+            fit: BoxFit.cover,
+          );
+        },
+        fit: BoxFit.cover,
       ),
       Positioned(
           bottom: 10,

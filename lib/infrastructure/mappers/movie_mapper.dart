@@ -43,7 +43,7 @@ class MovieMapper {
         originalTitle: theMoviedbModel.originalTitle,
         overview: theMoviedbModel.overview,
         popularity: theMoviedbModel.popularity,
-        posterPath: (theMoviedbModel.posterPath?.isEmpty != true)
+        posterPath: (theMoviedbModel.posterPath.isEmpty != true)
             ? 'https://image.tmdb.org/t/p/w500${theMoviedbModel.posterPath}'
             : null,
         releaseDate: theMoviedbModel.releaseDate,

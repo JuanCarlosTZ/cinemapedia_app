@@ -36,12 +36,16 @@ class CustomImageView extends StatelessWidget {
                   url,
                   fit: BoxFit.cover,
                 )
-              : Image.network(url, errorBuilder: (context, error, stackTrace) {
-                  return Image.asset(
-                    AssetsImagesApp.noPoster01,
-                    fit: BoxFit.cover,
-                  );
-                }, fit: BoxFit.cover),
+              : Image.network(
+                  url,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      AssetsImagesApp.noPoster01,
+                      fit: BoxFit.cover,
+                    );
+                  },
+                  fit: BoxFit.cover,
+                ),
         ),
       ),
     );

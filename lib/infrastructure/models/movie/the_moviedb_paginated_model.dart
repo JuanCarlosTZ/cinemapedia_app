@@ -32,7 +32,9 @@ class TheMoviedbPagenatedModel {
         dates: json["dates"] == null ? null : Dates.fromJson(json["dates"]),
         page: json["page"],
         theMoviedbModelList: List<TheMoviedbModel>.from(
-            json["results"].map((x) => TheMoviedbModel.fromJson(x))),
+                json["results"].map((x) => TheMoviedbModel.fromJson(x)))
+            .where((movie) => movie.posterPath.isNotEmpty)
+            .toList(),
         totalPages: json["total_pages"],
         totalResults: json["total_results"],
       );

@@ -14,10 +14,14 @@ class TmdbGenresDatasource extends GenreDatasource {
       }));
 
   Future<List<Genre>> _getList(String url) async {
-    final response = await dio.get(url);
-    final genres = GenreMapper.tmdbGenresResponseToEntity(
-        TmdbGenreResponseModel.fromJson(response.data));
-    return genres;
+    try {
+      final response = await dio.get(url);
+      final genres = GenreMapper.tmdbGenresResponseToEntity(
+          TmdbGenreResponseModel.fromJson(response.data));
+      return genres;
+    } catch (ex) {
+      rethrow;
+    }
   }
 
   @override

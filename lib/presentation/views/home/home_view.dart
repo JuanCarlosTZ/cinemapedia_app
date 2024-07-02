@@ -20,22 +20,29 @@ class HomeViewState extends ConsumerState<HomeView> {
   void initState() {
     super.initState();
     if (ref.read(nowPlayingMoviesProvider).isEmpty) {
-      ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+      ref.read(nowPlayingMoviesProvider.notifier).loadFirstPage();
     }
     if (ref.read(popularMoviesProvider).isEmpty) {
-      ref.read(popularMoviesProvider.notifier).loadNextPage();
+      ref.read(popularMoviesProvider.notifier).loadFirstPage();
     }
     if (ref.read(upcomingMoviesProvider).isEmpty) {
-      ref.read(upcomingMoviesProvider.notifier).loadNextPage();
+      ref.read(upcomingMoviesProvider.notifier).loadFirstPage();
     }
     if (ref.read(topRatedMoviesProvider).isEmpty) {
-      ref.read(topRatedMoviesProvider.notifier).loadNextPage();
+      ref.read(topRatedMoviesProvider.notifier).loadFirstPage();
     }
   }
 
   void _validateFirstLoaded(List<List<Object?>> states) {
     if (states.contains([])) return;
     AppInitializeService.removeFlutterNativeSplash();
+  }
+
+  Future<void> _restartLoad() async {
+    await ref.read(nowPlayingMoviesProvider.notifier).loadFirstPage();
+    await ref.read(popularMoviesProvider.notifier).loadFirstPage();
+    await ref.read(upcomingMoviesProvider.notifier).loadFirstPage();
+    await ref.read(topRatedMoviesProvider.notifier).loadFirstPage();
   }
 
   @override
@@ -81,41 +88,47 @@ class HomeViewState extends ConsumerState<HomeView> {
       HorizontalListviewMovie(
         title: "Muy pronto",
         movies: upcomingMovies,
+        loadNextPage: () {
+          ref.read(upcomingMoviesProvider.notifier).loadNextPage();
+        },
       ),
     ];
 
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-            floating: true,
-            flexibleSpace: CustomAppbar(onPressed: () {
-              final query = searchMovies.entries.last.key;
-              final movies = searchMovies.entries.last.value;
+    return RefreshIndicator(
+      onRefresh: _restartLoad,
+      child: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+              floating: true,
+              flexibleSpace: CustomAppbar(onPressed: () {
+                final query = searchMovies.entries.last.key;
+                final movies = searchMovies.entries.last.value;
 
-              showSearch(
-                  query: query,
-                  context: context,
-                  delegate: SearchMovieDelegate(
-                    initialData: movies,
-                    onSearch: (String query) {
-                      return ref
-                          .read(searchMoviesProvider.notifier)
-                          .loadSearchMovies(query);
-                    },
-                  )).then((value) {
-                if (value != null) {
-                  context.push(
-                    AppRouter.getMovieInfoPath(movieId: value.toString()),
-                  );
-                }
-              });
-            })),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-              childCount: sliverContent.length,
-              (context, index) => sliverContent[index]),
-        ),
-      ],
+                showSearch(
+                    query: query,
+                    context: context,
+                    delegate: SearchMovieDelegate(
+                      initialData: movies,
+                      onSearch: (String query) {
+                        return ref
+                            .read(searchMoviesProvider.notifier)
+                            .loadSearchMovies(query);
+                      },
+                    )).then((value) {
+                  if (value != null) {
+                    context.push(
+                      AppRouter.getMovieInfoPath(movieId: value.toString()),
+                    );
+                  }
+                });
+              })),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+                childCount: sliverContent.length,
+                (context, index) => sliverContent[index]),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -2,7 +2,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:cinemapedia_app/domain/entities/movie.dart';
 import 'package:cinemapedia_app/presentation/providers/category/tmdb_categories_provider.dart';
 import 'package:cinemapedia_app/presentation/providers/movie/movies_category_provider.dart';
-import 'package:cinemapedia_app/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,9 +24,6 @@ class CategoryViewState extends ConsumerState<CategoryView> {
   @override
   void initState() {
     super.initState();
-    if (ref.read(localMoviesProvider).isEmpty) {
-      ref.read(moviesCategoryProvider.notifier).loadNextPage();
-    }
 
     controller = ScrollController();
     controller.addListener(() {
@@ -51,83 +47,84 @@ class CategoryViewState extends ConsumerState<CategoryView> {
   @override
   Widget build(BuildContext context) {
     final moviesProvider = ref.watch(moviesCategoryProvider);
-    final categoriesFuture = ref.watch(categoriesProvider);
+    final categoriesState = ref.watch(categoriesProvider);
     final category = ref.watch(categoryProvider);
     final expansionController = ref.watch(categoryControllerProvider);
     final textStyle = Theme.of(context).textTheme;
 
     return Scaffold(
-      body: FutureBuilder(
-        future: categoriesFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState != ConnectionState.done) {
-            return const Center(
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                color: Colors.red,
-              ),
-            );
-          }
-          final categories = snapshot.data ?? [];
-
-          return Column(
-            children: [
-              //Selector de catagoria
-              SafeArea(
-                child: ExpansionTile(
-                  initiallyExpanded: expandedCategories,
-                  controller: expansionController,
-                  onExpansionChanged: (value) => setState(() {
-                    expandedCategories = value;
-                  }),
-                  title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Categoría', style: textStyle.bodyMedium),
-                      Text(category?.caption ?? 'Accion',
-                          style: textStyle.headlineSmall),
-                    ],
+      body: RefreshIndicator(
+          onRefresh: () async {
+            if (categoriesState.isLoading) return;
+            await ref.read(categoriesProvider.notifier).loadCatagory();
+          },
+          child: (ref.read(categoriesProvider).isLoading)
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: Colors.red,
                   ),
-                ),
-              ),
-
-              //Vista categorias o movies por categorias
-              Expanded(
-                child: IndexedStack(
-                  index: expandedCategories ? 0 : 1,
+                )
+              : Column(
                   children: [
-                    ListView(
-                      padding: const EdgeInsets.only(top: 0),
-                      children: [
-                        ...categories.map((category) => ListTile(
-                              titleAlignment: ListTileTitleAlignment.center,
-                              onTap: () async {
-                                ref
-                                    .watch(categoryProvider.notifier)
-                                    .update((state) => category);
-
-                                await ref
-                                    .watch(moviesCategoryProvider.notifier)
-                                    .reset(categoryIds: [category.id]);
-                                expansionController.collapse();
-
-                                setState(() {});
-                              },
-                              title: Center(child: Text(category.caption)),
-                            ))
-                      ],
+                    //Selector de catagoria
+                    SafeArea(
+                      child: ExpansionTile(
+                        initiallyExpanded: expandedCategories,
+                        controller: expansionController,
+                        onExpansionChanged: (value) => setState(() {
+                          expandedCategories = value;
+                        }),
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Categoría', style: textStyle.bodyMedium),
+                            Text(category?.caption ?? 'Accion',
+                                style: textStyle.headlineSmall),
+                          ],
+                        ),
+                      ),
                     ),
-                    _MovieItems(
-                        animate: !expandedCategories,
-                        controller: controller,
-                        moviesProvider: moviesProvider),
+
+                    //Vista categorias o movies por categorias
+                    Expanded(
+                      child: IndexedStack(
+                        index: expandedCategories ? 0 : 1,
+                        children: [
+                          ListView(
+                            padding: const EdgeInsets.only(top: 0),
+                            children: [
+                              ...categoriesState.categories.map((category) =>
+                                  ListTile(
+                                    titleAlignment:
+                                        ListTileTitleAlignment.center,
+                                    onTap: () async {
+                                      ref
+                                          .watch(categoryProvider.notifier)
+                                          .update((state) => category);
+
+                                      await ref
+                                          .watch(
+                                              moviesCategoryProvider.notifier)
+                                          .reset(categoryIds: [category.id]);
+                                      expansionController.collapse();
+
+                                      setState(() {});
+                                    },
+                                    title:
+                                        Center(child: Text(category.caption)),
+                                  ))
+                            ],
+                          ),
+                          _MovieItems(
+                              animate: !expandedCategories,
+                              controller: controller,
+                              moviesProvider: moviesProvider),
+                        ],
+                      ),
+                    ),
                   ],
-                ),
-              ),
-            ],
-          );
-        },
-      ),
+                )),
     );
   }
 }

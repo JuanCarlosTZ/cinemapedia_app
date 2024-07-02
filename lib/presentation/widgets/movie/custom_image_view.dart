@@ -1,3 +1,4 @@
+import 'package:cinemapedia_app/config/configs.dart';
 import 'package:flutter/material.dart';
 
 class CustomImageView extends StatelessWidget {
@@ -35,7 +36,12 @@ class CustomImageView extends StatelessWidget {
                   url,
                   fit: BoxFit.cover,
                 )
-              : Image.network(url, fit: BoxFit.cover),
+              : Image.network(url, errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    AssetsImagesApp.noPoster01,
+                    fit: BoxFit.cover,
+                  );
+                }, fit: BoxFit.cover),
         ),
       ),
     );

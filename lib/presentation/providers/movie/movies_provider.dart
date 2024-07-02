@@ -25,6 +25,20 @@ class MoviesNotifier extends StateNotifier<List<Movie>> {
     isLoading = false;
     return state;
   }
+
+  Future<List<Movie>> loadFirstPage() async {
+    if (isLoading && state.isNotEmpty) return state;
+
+    isLoading = true;
+    currentPage = 1;
+
+    final movies = await fetchMoreMovies(page: currentPage);
+    state = [...movies];
+
+    await Future.delayed(Durations.medium2);
+    isLoading = false;
+    return state;
+  }
 }
 
 final nowPlayingMoviesProvider =

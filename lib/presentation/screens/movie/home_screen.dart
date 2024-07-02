@@ -20,9 +20,9 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final homeBannerAd = ref.watch(homeBannerAdProvider);
-    final categoryBannerAd = ref.watch(categoryBannerAdProvider);
-    final favoriteBannerAd = ref.watch(favoriteBannerAdProvider);
+    final homeBannerAd = ref.watch(homeBannerAdProvider)?.bannerAd;
+    final categoryBannerAd = ref.watch(categoryBannerAdProvider)?.bannerAd;
+    final favoriteBannerAd = ref.watch(favoriteBannerAdProvider)?.bannerAd;
 
     final customPageViews = pageWiews.indexed.map(
       (pairValueElement) {

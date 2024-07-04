@@ -16,6 +16,7 @@ class HomeView extends ConsumerStatefulWidget {
 }
 
 class HomeViewState extends ConsumerState<HomeView> {
+  bool isSplashAvailable = true;
   @override
   void initState() {
     super.initState();
@@ -34,7 +35,10 @@ class HomeViewState extends ConsumerState<HomeView> {
   }
 
   void _validateFirstLoaded(List<List<Object?>> states) {
+    if (!isSplashAvailable) return;
     if (states.contains([])) return;
+
+    isSplashAvailable = false;
     AppInitializeService.removeFlutterNativeSplash();
   }
 

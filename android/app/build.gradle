@@ -83,5 +83,5 @@ flutter {
 }
 
 dependencies {
-    implementation 'androidx.webkit:webkit:1.5.0' // o la versión más reciente disponible
+    implementation 'androidx.webkit:webkit:1.5.0' 
 }
